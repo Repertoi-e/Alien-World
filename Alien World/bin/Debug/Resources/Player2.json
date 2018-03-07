@@ -1,0 +1,14 @@
+﻿{
+  "Components": [
+    {
+      "Type": "PositionComponent",
+      "Start": [ 850, 150 ]
+    },
+    {
+      "Type": "SpriteComponent",
+      "Size": [ 600, 600 ],
+      "SpriteType": "Static",
+      "Resource": "/Resources/Art-Assets/Environment/Tileset/front-layer.png"
+    }
+  ]
+}

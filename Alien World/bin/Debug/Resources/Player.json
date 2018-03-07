@@ -1,0 +1,18 @@
+﻿{
+  "Components": [
+    {
+      "Type": "PositionComponent",
+      "Start": [ 150, 150 ]
+    },
+    {
+      "Type": "SpriteComponent",
+      "Size": [ 600, 600 ],
+      "SpriteType": "Static",
+      "Resource": "/Resources/Textures/player.png"
+    },
+    {
+      "Type": "ScriptComponent",
+      "File": "/Resources/Scripts/Player.lua"
+    }
+  ]
+}

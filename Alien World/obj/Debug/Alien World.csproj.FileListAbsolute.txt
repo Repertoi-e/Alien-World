@@ -1,0 +1,28 @@
+E:\Programming\C#\Alien World\Alien World\obj\Debug\Alien World.csproj.CoreCompileInputs.cache
+E:\Programming\C#\Alien World\Alien World\bin\Debug\Alien World.exe.config
+E:\Programming\C#\Alien World\Alien World\bin\Debug\Alien World.exe
+E:\Programming\C#\Alien World\Alien World\bin\Debug\Alien World.pdb
+E:\Programming\C#\Alien World\Alien World\bin\Debug\Engine.dll
+E:\Programming\C#\Alien World\Alien World\bin\Debug\WinApi.dll
+E:\Programming\C#\Alien World\Alien World\bin\Debug\LuaInterface.dll
+E:\Programming\C#\Alien World\Alien World\bin\Debug\fastJSON.dll
+E:\Programming\C#\Alien World\Alien World\bin\Debug\NetCoreEx.Geometry.dll
+E:\Programming\C#\Alien World\Alien World\bin\Debug\SharpDX.dll
+E:\Programming\C#\Alien World\Alien World\bin\Debug\Engine.pdb
+E:\Programming\C#\Alien World\Alien World\bin\Debug\SharpDX.Mathematics.xml
+E:\Programming\C#\Alien World\Alien World\bin\Debug\SharpDX.xml
+E:\Programming\C#\Alien World\Alien World\obj\Debug\Alien World.csprojResolveAssemblyReference.cache
+E:\Programming\C#\Alien World\Alien World\obj\Debug\Alien World.exe
+E:\Programming\C#\Alien World\Alien World\obj\Debug\Alien World.pdb
+E:\Programming\C#\Alien World\Alien World\bin\Debug\SharpDX.Direct3D11.dll
+E:\Programming\C#\Alien World\Alien World\bin\Debug\SharpDX.DXGI.dll
+E:\Programming\C#\Alien World\Alien World\bin\Debug\SharpDX.Direct3D11.xml
+E:\Programming\C#\Alien World\Alien World\bin\Debug\SharpDX.DXGI.xml
+E:\Programming\C#\Alien World\Alien World\bin\Debug\SharpDX.D3DCompiler.dll
+E:\Programming\C#\Alien World\Alien World\bin\Debug\SharpDX.D3DCompiler.xml
+E:\Programming\C#\Alien World\Alien World\bin\Debug\SharpDX.Direct2D1.dll
+E:\Programming\C#\Alien World\Alien World\bin\Debug\Engine.dll.config
+E:\Programming\C#\Alien World\Alien World\bin\Debug\SharpDX.Direct2D1.xml
+E:\Programming\C#\Alien World\Alien World\bin\Debug\log4net.dll
+E:\Programming\C#\Alien World\Alien World\bin\Debug\log4net.xml
+E:\Programming\C#\Alien World\Alien World\bin\Debug\lua51.dll
