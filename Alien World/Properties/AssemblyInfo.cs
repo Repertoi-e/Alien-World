@@ -6,12 +6,12 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Alien World")]
-[assembly: AssemblyDescription("")]
-[assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyDescription("A simple game made for fun.")]
+[assembly: AssemblyConfiguration("Debug")]
+[assembly: AssemblyCompany("Repertoire")]
 [assembly: AssemblyProduct("Alien World")]
 [assembly: AssemblyCopyright("Copyright ©  2018")]
-[assembly: AssemblyTrademark("")]
+[assembly: AssemblyTrademark("Repertoire")]
 [assembly: AssemblyCulture("")]
 [assembly: SecurityRules(SecurityRuleSet.Level1)]
 
@@ -20,7 +20,6 @@ using System.Runtime.InteropServices;
 // COM, set the ComVisible attribute to true on that type.
 [assembly: ComVisible(false)]
 
-//
 [assembly: log4net.Config.XmlConfigurator(Watch = true)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM

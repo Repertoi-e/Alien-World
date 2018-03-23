@@ -1,0 +1,351 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{F03CB098-D316-49D2-98B0-16620D0D91DA}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>Alien_World</RootNamespace>
+    <AssemblyName>Alien_World</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>x64</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\Built\bin\Debug\</OutputPath>
+    <IntermediateOutputPath>..\Built\obj\Debug\</IntermediateOutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>x64</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\Built\bin\Release\</OutputPath>
+    <IntermediateOutputPath>..\Built\obj\Release\</IntermediateOutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RunPostBuildEvent>Always</RunPostBuildEvent>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DesperateDevs.Analytics">
+      <HintPath>..\packages\Entitas\Editor\DesperateDevs.Analytics.dll</HintPath>
+    </Reference>
+    <Reference Include="DesperateDevs.CodeGeneration">
+      <HintPath>..\packages\Entitas\Editor\DesperateDevs.CodeGeneration.dll</HintPath>
+    </Reference>
+    <Reference Include="DesperateDevs.CodeGeneration.CodeGenerator">
+      <HintPath>..\packages\Entitas\Editor\DesperateDevs.CodeGeneration.CodeGenerator.dll</HintPath>
+    </Reference>
+    <Reference Include="DesperateDevs.CodeGeneration.CodeGenerator.Unity.Editor">
+      <HintPath>..\packages\Entitas\Editor\DesperateDevs.CodeGeneration.CodeGenerator.Unity.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="DesperateDevs.CodeGeneration.Plugins">
+      <HintPath>..\packages\Entitas\Editor\Plugins\DesperateDevs\DesperateDevs.CodeGeneration.Plugins.dll</HintPath>
+    </Reference>
+    <Reference Include="DesperateDevs.Logging">
+      <HintPath>..\packages\Entitas\DesperateDevs.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="DesperateDevs.Networking">
+      <HintPath>..\packages\Entitas\Editor\DesperateDevs.Networking.dll</HintPath>
+    </Reference>
+    <Reference Include="DesperateDevs.Serialization">
+      <HintPath>..\packages\Entitas\Editor\DesperateDevs.Serialization.dll</HintPath>
+    </Reference>
+    <Reference Include="DesperateDevs.Utils">
+      <HintPath>..\packages\Entitas\DesperateDevs.Utils.dll</HintPath>
+    </Reference>
+    <Reference Include="Entitas">
+      <HintPath>..\packages\Entitas\Entitas.dll</HintPath>
+    </Reference>
+    <Reference Include="Entitas.Blueprints">
+      <HintPath>..\packages\Entitas\Entitas.Blueprints.dll</HintPath>
+    </Reference>
+    <Reference Include="Entitas.CodeGeneration.Attributes">
+      <HintPath>..\packages\Entitas\Entitas.CodeGeneration.Attributes.dll</HintPath>
+    </Reference>
+    <Reference Include="Entitas.CodeGeneration.Plugins">
+      <HintPath>..\packages\Entitas\Editor\Plugins\Entitas\Entitas.CodeGeneration.Plugins.dll</HintPath>
+    </Reference>
+    <Reference Include="Entitas.Migration">
+      <HintPath>..\packages\Entitas\Editor\Entitas.Migration.dll</HintPath>
+    </Reference>
+    <Reference Include="Entitas.Utils">
+      <HintPath>..\packages\Entitas\Entitas.Utils.dll</HintPath>
+    </Reference>
+    <Reference Include="fastjson, Version=2.1.0.0, Culture=neutral, PublicKeyToken=6b75a806b86095cd, processorArchitecture=MSIL">
+      <HintPath>..\packages\fastJSON.2.1.28\lib\net40\fastjson.dll</HintPath>
+    </Reference>
+    <Reference Include="ImGui.NET, Version=0.4.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ImGui.NET.0.4.3\lib\netstandard1.1\ImGui.NET.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="lua51, Version=0.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\LuaInterface\lua51.dll</HintPath>
+    </Reference>
+    <Reference Include="LuaInterface, Version=2.0.4.31042, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\LuaInterface\LuaInterface.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Win32.Primitives, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Win32.Primitives.4.3.0\lib\net46\Microsoft.Win32.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="NetCoreEx.BinaryExtensions, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NetCoreEx.BinaryExtensions.3.0.0\lib\netstandard1.4\NetCoreEx.BinaryExtensions.dll</HintPath>
+    </Reference>
+    <Reference Include="NetCoreEx.Geometry, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NetCoreEx.Geometry.3.0.0\lib\netstandard1.4\NetCoreEx.Geometry.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpDX.4.0.1\lib\net45\SharpDX.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.D3DCompiler, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpDX.D3DCompiler.4.0.1\lib\net45\SharpDX.D3DCompiler.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.Direct2D1, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpDX.Direct2D1.4.0.1\lib\net45\SharpDX.Direct2D1.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.Direct3D11, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpDX.Direct3D11.4.0.1\lib\net45\SharpDX.Direct3D11.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.DXGI, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpDX.DXGI.4.0.1\lib\net45\SharpDX.DXGI.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.Mathematics, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpDX.Mathematics.4.0.1\lib\net45\SharpDX.Mathematics.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.AppContext, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.AppContext.4.3.0\lib\net46\System.AppContext.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Buffers, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.4.0\lib\netstandard2.0\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Console, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Console.4.3.0\lib\net46\System.Console.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Core" />
+    <Reference Include="System.Diagnostics.DiagnosticSource, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Diagnostics.DiagnosticSource.4.3.0\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Globalization.Calendars, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Globalization.Calendars.4.3.0\lib\net46\System.Globalization.Calendars.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.Compression, Version=4.1.2.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.Compression.4.3.0\lib\net46\System.IO.Compression.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.IO.Compression.ZipFile, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.Compression.ZipFile.4.3.0\lib\net46\System.IO.Compression.ZipFile.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.FileSystem, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.FileSystem.4.3.0\lib\net46\System.IO.FileSystem.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.FileSystem.Primitives, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.FileSystem.Primitives.4.3.0\lib\net46\System.IO.FileSystem.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Net.Http.4.3.0\lib\net46\System.Net.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Sockets, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Net.Sockets.4.3.0\lib\net46\System.Net.Sockets.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.4.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.4.0\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.InteropServices.RuntimeInformation, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.InteropServices.RuntimeInformation.4.3.0\lib\net45\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Algorithms, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Algorithms.4.3.0\lib\net461\System.Security.Cryptography.Algorithms.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Encoding, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Encoding.4.3.0\lib\net46\System.Security.Cryptography.Encoding.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Primitives, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Primitives.4.3.0\lib\net46\System.Security.Cryptography.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.X509Certificates, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.X509Certificates.4.3.0\lib\net461\System.Security.Cryptography.X509Certificates.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.ReaderWriter, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Xml.ReaderWriter.4.3.0\lib\net46\System.Xml.ReaderWriter.dll</HintPath>
+    </Reference>
+    <Reference Include="WinApi, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\WinApi.4.0.0\lib\netstandard1.4\WinApi.dll</HintPath>
+    </Reference>
+    <Reference Include="WinApi.Desktop, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\WinApi.Desktop.4.0.0\lib\netstandard2.0\WinApi.Desktop.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Generated\Game\Components\GameVelocityComponent.cs" />
+    <Compile Include="Generated\Game\Components\GameStaticBodyComponent.cs" />
+    <Compile Include="Generated\Game\Components\GameCollisionComponent.cs" />
+    <Compile Include="Generated\Game\Components\GamePositionComponent.cs" />
+    <Compile Include="Generated\Game\Components\GameScriptComponent.cs" />
+    <Compile Include="Generated\Game\Components\GameSpriteComponent.cs" />
+    <Compile Include="Generated\Game\GameComponentsLookup.cs" />
+    <Compile Include="Generated\Game\GameAttribute.cs" />
+    <Compile Include="Generated\Game\GameContext.cs" />
+    <Compile Include="Generated\Game\GameMatcher.cs" />
+    <Compile Include="Generated\Contexts.cs" />
+    <Compile Include="Generated\Game\GameEntity.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Assets\Components\VelocityComponent.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Assets\Components\StaticBodyComponent.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App\Time.cs" />
+    <Compile Include="Assets\Entities\TestGround.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Assets\Components\CollisionComponent.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Assets\Entities\Player.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Assets\Components\PositionComponent.cs" />
+    <Compile Include="Assets\Components\ScriptComponent.cs" />
+    <Compile Include="Assets\Components\SpriteComponent.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App\Application.cs" />
+    <Compile Include="App\GameLoop.cs" />
+    <Compile Include="App\InputManager.cs" />
+    <Compile Include="App\Layer.cs" />
+    <Compile Include="Collections\BitVector64.cs" />
+    <Compile Include="Collections\EnumerableCollection.cs" />
+    <Compile Include="Collections\ListExtensions.cs" />
+    <Compile Include="Collections\ObjectPool.cs" />
+    <Compile Include="Game\Editor.cs" />
+    <Compile Include="FileSystem\FileSystemEntity.cs" />
+    <Compile Include="FileSystem\FileSystemPath.cs" />
+    <Compile Include="FileSystem\IFileSystem.cs" />
+    <Compile Include="FileSystem\PhysicalFileSystem.cs" />
+    <Compile Include="Graphics\AnimatedSprite.cs" />
+    <Compile Include="Graphics\Buffers\BufferLayout.cs" />
+    <Compile Include="Graphics\Buffers\IndexBuffer.cs" />
+    <Compile Include="Graphics\Buffers\VertexBuffer.cs" />
+    <Compile Include="Graphics\Context.cs" />
+    <Compile Include="Graphics\Sprite.cs" />
+    <Compile Include="Graphics\Renderer.cs" />
+    <Compile Include="Graphics\Renderer2D.cs" />
+    <Compile Include="Graphics\Shaders\Shader.cs" />
+    <Compile Include="Graphics\Shaders\ShaderResourceDeclaration.cs" />
+    <Compile Include="Graphics\Shaders\ShaderResourceTyPE.cs" />
+    <Compile Include="Graphics\Shaders\ShaderStruct.cs" />
+    <Compile Include="Graphics\Shaders\ShaderUniformBufferDeclaration.cs" />
+    <Compile Include="Graphics\Shaders\ShaderUniformDeclaration.cs" />
+    <Compile Include="Graphics\Shaders\ShaderUniformType.cs" />
+    <Compile Include="Graphics\Texture.cs" />
+    <Compile Include="InputEvents\Key.cs" />
+    <Compile Include="InputEvents\Mouse.cs" />
+    <Compile Include="Physics\PhysicsSystem.cs" />
+    <Compile Include="Physics\PolygonCollision.cs" />
+    <Compile Include="Physics\Polygon.cs" />
+    <Compile Include="Physics\PolygonCollisionResult.cs" />
+    <Compile Include="Game\Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ResourceManager\Resource.cs" />
+    <Compile Include="ResourceManager\ResourceLoader.cs" />
+    <Compile Include="ResourceManager\ResourceManager.cs" />
+    <Compile Include="Script\LuaEngine.cs" />
+    <Compile Include="Script\LuaScript.cs" />
+    <Compile Include="Script\LuaScriptManager.cs" />
+    <Compile Include="Script\ScriptSystem.cs" />
+    <Compile Include="Util.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="Assets\Scripts\Player.lua" />
+    <None Include="Assets\Shaders\Renderer2DPS.cso" />
+    <None Include="Assets\Shaders\Renderer2DVS.cso" />
+    <None Include="CompileShaders.bat" />
+    <None Include="Entitas.properties" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Assets\Art\Environment\backgrounds\mountains.png" />
+    <Content Include="Assets\Art\Environment\backgrounds\rocky-background.png" />
+    <Content Include="Assets\Art\Environment\backgrounds\sky.png" />
+    <Content Include="Assets\Art\Environment\environment-example.png" />
+    <Content Include="Assets\Art\Environment\Tileset\back-layer.png" />
+    <Content Include="Assets\Art\Environment\Tileset\front-layer.png" />
+    <Content Include="Assets\Art\Environment\Tileset\main-layer.png" />
+    <Content Include="Assets\Art\Sprites\characters\enemy-01\frog-die.png" />
+    <Content Include="Assets\Art\Sprites\characters\enemy-01\frog-idle.png" />
+    <Content Include="Assets\Art\Sprites\characters\enemy-01\frog-walk.png" />
+    <Content Include="Assets\Art\Sprites\characters\enemy-02\skull-die.png" />
+    <Content Include="Assets\Art\Sprites\characters\enemy-02\skull-fly.png" />
+    <Content Include="Assets\Art\Sprites\characters\enemy-02\skull-perched.png" />
+    <Content Include="Assets\Art\Sprites\characters\npc-female\npc-female-idle.png" />
+    <Content Include="Assets\Art\Sprites\characters\npc-female\npc-female-walk.png" />
+    <Content Include="Assets\Art\Sprites\characters\npc-male\npc-male-idle.png" />
+    <Content Include="Assets\Art\Sprites\characters\npc-male\npc-male-walk.png" />
+    <Content Include="Assets\Art\Sprites\characters\player\player-die.png" />
+    <Content Include="Assets\Art\Sprites\characters\player\player-idle.png" />
+    <Content Include="Assets\Art\Sprites\characters\player\player-jump.png" />
+    <Content Include="Assets\Art\Sprites\characters\player\player-run.png" />
+    <Content Include="Assets\Art\Sprites\characters\player\player-shoot.png" />
+    <Content Include="Assets\Art\Sprites\HUD\energy-bar.png" />
+    <Content Include="Assets\Art\Sprites\HUD\health-bar.png" />
+    <Content Include="Assets\Art\Sprites\HUD\textbox.png" />
+    <Content Include="Assets\Art\Sprites\misc\ammo.png" />
+    <Content Include="Assets\Art\Sprites\misc\collect-feedback.png" />
+    <Content Include="Assets\Art\Sprites\misc\computer-console.png" />
+    <Content Include="Assets\Art\Sprites\misc\explotion.png" />
+    <Content Include="Assets\Art\Sprites\misc\health.png" />
+    <Content Include="Assets\Art\Sprites\misc\opening-door.png" />
+    <Content Include="Assets\Art\Sprites\misc\shoot.png" />
+    <Content Include="Assets\Art\Sprites\misc\space-ship.png" />
+    <Content Include="Assets\Art\Sprites\misc\weapon.png" />
+    <Content Include="Assets\Art\Title-Screen\button-options.png" />
+    <Content Include="Assets\Art\Title-Screen\button-start.png" />
+    <Content Include="Assets\Art\Title-Screen\title-screen-background.png" />
+    <Content Include="Assets\Art\Title-Screen\title-screen-preview.png" />
+    <Content Include="Assets\Art\Title-Screen\title-screen-title.png" />
+    <Content Include="Assets\Shaders\Source\Renderer2D.hlsl" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
+</Project>

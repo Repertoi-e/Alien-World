@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ConfigData xmlns:i="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.datacontract.org/2004/07/Entitas_vs.View.ViewModels">
+  <Generators>
+    <GeneratorData>
+      <GeneratorPath>packages\Entitas\CodeGenerator</GeneratorPath>
+      <Name>CodeGen</Name>
+    </GeneratorData>
+  </Generators>
+  <TriggerGroups>
+    <TriggerGroup>
+      <EntitasCfgPath>Alien World\Entitas.properties</EntitasCfgPath>
+      <EntitasUserCfgPath>Alien World\User.properties</EntitasUserCfgPath>
+      <GeneratorName>CodeGen</GeneratorName>
+      <Triggers xmlns:d4p1="http://schemas.microsoft.com/2003/10/Serialization/Arrays">
+        <d4p1:string>Alien World\Assets\Components</d4p1:string>
+      </Triggers>
+      <UniqueProjectName>Alien World\Alien World.csproj</UniqueProjectName>
+    </TriggerGroup>
+  </TriggerGroups>
+</ConfigData>

@@ -1,0 +1,8 @@
+E:\Programming\C#\Alien World\Built\obj\Debug\Alien World.csprojResolveAssemblyReference.cache
+E:\Programming\C#\Alien World\Built\obj\Debug\Alien World.exe.config
+E:\Programming\C#\Alien World\Built\obj\Debug\Alien World.csproj.CoreCompileInputs.cache
+E:\Programming\C#\Alien World\Built\bin\Debug\Alien World.exe.config
+E:\Programming\C#\Alien World\Built\bin\Debug\Alien World.exe
+E:\Programming\C#\Alien World\Built\bin\Debug\Alien World.pdb
+E:\Programming\C#\Alien World\Built\obj\Debug\Alien World.exe
+E:\Programming\C#\Alien World\Built\obj\Debug\Alien World.pdb
