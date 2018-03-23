@@ -36,6 +36,7 @@ namespace Alien_World.Physics
         public Polygon(Vector2[] vertices)
         {
             Vertices = vertices.ToList();
+            Edges = new List<Vector2>(Vertices.Count);
             BuildEdges();
         }
 

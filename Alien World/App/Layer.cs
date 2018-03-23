@@ -42,15 +42,31 @@ namespace Alien_World.App
 
             OnPreRender(m_Renderer2D);
             foreach (GameEntity entity in m_RenderableEntities.GetEntities())
-            {
                 m_Renderer2D.Submit(entity.position - entity.sprite.Renderable.Size / 2, entity.sprite.Renderable);
-                if (entity.hasCollision)
-                    m_Renderer2D.DrawPolygon(entity.collision.CollisionBounds.Vertices, 0xff00ffff);
-            }
+
             OnRender(m_Renderer2D);
             
             m_Renderer2D.End();
             m_Renderer2D.Present();
+
+            bool collisionBoxesRendered = false;
+            foreach (GameEntity entity in m_RenderableEntities.GetEntities())
+                if (entity.hasCollision)
+                {
+                    if (!collisionBoxesRendered)
+                    {
+                        m_Renderer2D.Begin();
+                        collisionBoxesRendered = true;
+                    }
+                    m_Renderer2D.FillPolygon(entity.collision.CollisionBounds.Vertices, 0xff00ffff);
+                }
+            if (collisionBoxesRendered)
+            {
+                Renderer.Instance.SetWireframe(true);
+                m_Renderer2D.End();
+                m_Renderer2D.Present();
+                Renderer.Instance.SetWireframe(false);
+            }
         }
 
         public void _Update()

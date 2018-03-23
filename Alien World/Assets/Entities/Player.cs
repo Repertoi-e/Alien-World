@@ -12,7 +12,15 @@ static class Player
         entity.AddSprite(PlayerSprites.PlayerRun, false);
         entity.AddScript(ScriptComponent.GetLuaScript(entity, "/Assets/Scripts/Player.lua"));
         entity.AddVelocity(Vector2.Zero);
-        entity.AddCollision(new Polygon(entity.position, 25, 25), null);
+        entity.AddCollision(new Polygon(entity.position, new Vector2[]
+            {
+                new Vector2(  0, -70),
+                new Vector2( 50, -50),
+                new Vector2( 50,  50),
+                new Vector2(  0,  75),
+                new Vector2(-50,  50),
+                new Vector2(-50, -50),
+            }), null);
         entity.isStaticBody = false;
 
         return entity;

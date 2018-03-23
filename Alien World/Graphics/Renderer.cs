@@ -155,6 +155,11 @@ namespace Alien_World.Graphics
             }
         }
 
+        public void SetWireframe(bool enabled)
+        {
+            m_Context.SetWireframe(enabled);
+        }
+
         public void SetDepthTesting(bool enabled)
         {
             m_Context.DevCon.OutputMerger.SetDepthStencilState(m_DepthStencilStates[enabled ? 0 : 1]);

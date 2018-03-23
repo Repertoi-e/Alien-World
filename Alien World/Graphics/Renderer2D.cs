@@ -7,8 +7,6 @@ using Alien_World.Resource_Manager;
 using Alien_World.Graphics.Buffers;
 using Alien_World.Graphics.Shaders;
 
-using Alien_World.Collections;
-
 using SharpDX;
 
 namespace Alien_World.Graphics
@@ -217,12 +215,83 @@ namespace Alien_World.Graphics
         public void DrawPolygon(List<Vector2> vertices, uint color, float thickness = 0.5f)
         {
             int size = vertices.Count;
+            if (size < 3)
+                return;
             for (int i = 0; i < size; i++)
             {
                 Vector2 p1 = vertices[i];
                 Vector2 p2 = vertices[(i + 1) % size];
                 DrawLine(p1.X, p1.Y, p2.X, p2.Y, color, thickness);
             }
+        }
+
+        public void FillPolygon(List<Vector2> vertices, uint color)
+        {
+            int size = vertices.Count;
+            if (size < 3)
+                return;
+            int indexSize = size - 1;
+
+            int i = 1;
+            while (i < indexSize)
+            {
+                m_Buffer->Position = vertices[0];
+                m_Buffer->UV = Vector2.Zero;
+                m_Buffer->TID = 0;
+                m_Buffer->Color = color;
+                m_Buffer++;
+
+                m_Buffer->Position = vertices[i];
+                m_Buffer->UV = Vector2.Zero;
+                m_Buffer->TID = 0;
+                m_Buffer->Color = color;
+                m_Buffer++;
+                i++;
+
+                m_Buffer->Position = vertices[i > indexSize ? indexSize : i];
+                m_Buffer->UV = Vector2.Zero;
+                m_Buffer->TID = 0;
+                m_Buffer->Color = color;
+                m_Buffer++;
+                i++;
+
+                m_Buffer->Position = vertices[i > indexSize ? indexSize : i];
+                m_Buffer->UV = Vector2.Zero;
+                m_Buffer->TID = 0;
+                m_Buffer->Color = color;
+                m_Buffer++;
+
+                m_IndexCount += 6;
+            }
+        }
+
+        public void FillRect(float x, float y, float width, float height, uint color)
+        {
+            m_Buffer->Position = new Vector2(x, y);
+            m_Buffer->UV = Vector2.Zero;
+            m_Buffer->TID = 0;
+            m_Buffer->Color = color;
+            m_Buffer++;
+
+            m_Buffer->Position = new Vector2(x + width, y);
+            m_Buffer->UV = Vector2.Zero;
+            m_Buffer->TID = 0;
+            m_Buffer->Color = color;
+            m_Buffer++;
+
+            m_Buffer->Position = new Vector2(x + width, y + width);
+            m_Buffer->UV = Vector2.Zero;
+            m_Buffer->TID = 0;
+            m_Buffer->Color = color;
+            m_Buffer++;
+
+            m_Buffer->Position = new Vector2(x, y + width);
+            m_Buffer->UV = Vector2.Zero;
+            m_Buffer->TID = 0;
+            m_Buffer->Color = color;
+            m_Buffer++;
+
+            m_IndexCount += 6;
         }
 
         public void End()

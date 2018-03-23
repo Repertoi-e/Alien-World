@@ -3,9 +3,10 @@ local User32 = CLRPackage.Get("WinApi", "WinApi.User32")
 local Alien_World = CLRPackage.Get("Alien_World", "")
 
 local inputJump, inputLeft, inputRight = false, false, false
+local _handler1, _handler2
 
 function Player.Init()
-	InputManager.KeyPressedHandler:Add(function(event) 
+	_handler1 = InputManager.KeyPressedHandler:Add(function(event) 
 		if event.KeyCode == User32.VirtualKey.W then
 			inputJump = true
 		end
@@ -17,7 +18,7 @@ function Player.Init()
 		end
 	end)
 
-	InputManager.KeyReleasedHandler:Add(function(event) 
+	_handler2 = InputManager.KeyReleasedHandler:Add(function(event) 
 		if event.KeyCode == User32.VirtualKey.W then
 			inputJump = false
 		end
@@ -33,6 +34,7 @@ end
 local airborne, running, flipped = false, false, false;
 local toJump = 0;
 
+-- Constants
 local acc = 0.446875
 local dec = 0.9
 local frc = 0.446875
@@ -41,6 +43,7 @@ local topFall = 16
 local gravity = acc * 2
 local jmp = -16.5
 
+-- Return the sign of a number (-1,1,0)
 function sign(value)
 	if value < 0 then return -1 end
 	if value > 0 then return  1 end
@@ -56,6 +59,7 @@ function Player.Update(dt)
 			toJump = toJump - 1 
 		end
 
+		-- Jumping
 		if inputJump and airborne == false and toJump == 0 then 
 			velVec.Y = jmp
 			airborne = true
@@ -67,6 +71,7 @@ function Player.Update(dt)
 			end
 		end
 
+		-- Right and left movement
 		if inputRight then
 			if velVec.X < 0 then 
 				velVec.X = velVec.X + dec 
@@ -86,6 +91,7 @@ function Player.Update(dt)
 				* sign(velVec.X)
 		end
 
+		-- While in air
 		if airborne then
 			sprite.Renderable = Alien_World.PlayerSprites.PlayerJump
 			Alien_World.PlayerSprites.PlayerJump:SetFrame(math.abs(velVec.Y < 1 and 2 or (velVec.Y > 0 and 3 or 1)))
@@ -96,11 +102,13 @@ function Player.Update(dt)
 			sprite.Renderable = running and Alien_World.PlayerSprites.PlayerRun or Alien_World.PlayerSprites.PlayerIdle
 		end
 
+		-- Gravity
 		velVec.Y = velVec.Y + gravity;
         if velVec.Y > topFall then
             velVec.Y = topFall
 		end
 
+		-- Check if player has collided with ground
 		local collisionResults = this.Entity.collision.LastCollisionResults
 		if collisionResults ~= nil then
 			for i=0,collisionResults.Count - 1 do
@@ -116,5 +124,6 @@ function Player.Update(dt)
 end
 
 function Player.Dispose()
-
+	InputManager.KeyPressedHandler:Remove(_handler1)
+	InputManager.KeyReleasedHandler:Remove(_handler2)
 end
