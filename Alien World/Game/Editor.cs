@@ -1,11 +1,5 @@
-﻿using System;
-
-using Alien_World.App;
+﻿using Alien_World.App;
 using Alien_World.Graphics;
-using Alien_World.Resource_Manager;
-using Alien_World.Input_Events;
-
-using Entitas;
 
 namespace Alien_World
 {
@@ -16,12 +10,11 @@ namespace Alien_World
             m_EntitySystemManager
                 .Add(new Physics.CollisionSystem(m_EntityManager))
                 .Add(new Physics.MovementSystem(m_EntityManager))
-                .Add(new Script.ScriptSystem(m_EntityManager));
+                .Add(new Script.ScriptSystem(m_EntityManager))
+                .Add(new AnimationSystem(m_EntityManager));
 
             GameEntity player = m_EntityManager.CreatePlayer(250, 250);
             GameEntity ground = m_EntityManager.CreateTestGround(200, 500);
-            //for (int i = 0; i < 0; i++)
-            //    player2 = m_EntityManager.CreateFromCopy(player2);
         }
 
         protected override void Dispose(bool managed)

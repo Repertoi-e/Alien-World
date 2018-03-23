@@ -17,15 +17,15 @@ namespace Alien_World.Graphics
         private bool m_Playing = false;
         List<Frame> m_Frames;
 
-        public AnimatedSprite(Frame[] frames)
-            : base(frames[0].Region.Texture.Size, frames[0].Region.Texture)
+        public AnimatedSprite(Vector2 size, Frame[] frames)
+            : base(size, frames[0].Region.Texture)
         {
             m_Frames = new List<Frame>(frames.Length);
             m_Frames.AddRange(frames);
         }
 
-        public AnimatedSprite(TextureRegion[] textures, uint frameDuration)
-            : base(textures[0].Texture.Size, textures[0].Texture)
+        public AnimatedSprite(Vector2 size, TextureRegion[] textures, uint frameDuration)
+            : base(size, textures[0].Texture)
         {
             m_Frames = new List<Frame>(textures.Length);
             foreach (TextureRegion texture in textures)
@@ -74,6 +74,11 @@ namespace Alien_World.Graphics
         public override void Render(Vector2 position, Renderer2D renderer)
         {
             renderer.Submit(position, this);
+        }
+
+        public Frame GetFrame()
+        {
+            return m_Frames[m_CurrentFrame];
         }
 
         public void Update()

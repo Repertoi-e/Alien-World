@@ -8,7 +8,7 @@ static class TestGround
     {
         GameEntity entity = context.CreateEntity();
         entity.AddPosition(x, y);
-        entity.AddSprite(SpriteComponent.GetRenderableFromDefinition("Static", "/Assets/Art/Title-Screen/button-start.png", 900, 20));
+        entity.AddSprite(SpriteComponent.GetRenderableFromDefinition("Static", "/Assets/Art/Title-Screen/button-start.png", 900, 20), false);
         entity.AddVelocity(Vector2.Zero);
         entity.AddCollision(new Polygon(entity.position, 450, 10), null);
         entity.isStaticBody = true;

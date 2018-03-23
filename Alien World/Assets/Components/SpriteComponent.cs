@@ -8,6 +8,19 @@ using Alien_World.Resource_Manager;
 public struct SpriteComponent : IComponent
 {
     public Sprite Renderable;
+    public bool Flipped;
+
+    public bool IsAnimated { get
+        {
+            return Renderable is AnimatedSprite;
+        } }
+
+    public AnimatedSprite GetAsAnimated { get
+        {
+            if (Renderable is AnimatedSprite sprite)
+                return sprite;
+            return null;
+        } }
 
     /// <param name="spriteType">either static/...(TODO)</param>
     /// <param name="resource">resource path</param>

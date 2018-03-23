@@ -220,6 +220,9 @@
     <Compile Include="Generated\Game\GameEntity.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Sprites\PlayerSprites.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="Assets\Components\VelocityComponent.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -259,6 +262,7 @@
     <Compile Include="Graphics\Buffers\IndexBuffer.cs" />
     <Compile Include="Graphics\Buffers\VertexBuffer.cs" />
     <Compile Include="Graphics\Context.cs" />
+    <Compile Include="Graphics\AnimationSystem.cs" />
     <Compile Include="Graphics\Sprite.cs" />
     <Compile Include="Graphics\Renderer.cs" />
     <Compile Include="Graphics\Renderer2D.cs" />

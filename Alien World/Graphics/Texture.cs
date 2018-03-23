@@ -200,10 +200,10 @@ namespace Alien_World.Graphics
                         Texture = m_Texture,
                         UVs = new Vector2[]
                         {
-                            new Vector2(u0, v1),
-                            new Vector2(u1, v1),
+                            new Vector2(u0, v0),
                             new Vector2(u1, v0),
-                            new Vector2(u0, v0)
+                            new Vector2(u1, v1),
+                            new Vector2(u0, v1)
                         }
                     });
                 }

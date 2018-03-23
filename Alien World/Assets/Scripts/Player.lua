@@ -1,5 +1,6 @@
 ﻿local CLRPackage = require "CLRPackage"
 local User32 = CLRPackage.Get("WinApi", "WinApi.User32")
+local Alien_World = CLRPackage.Get("Alien_World", "")
 
 local inputJump, inputLeft, inputRight = false, false, false
 
@@ -48,6 +49,7 @@ end
 
 function Player.Update(dt)
 		local velVec = this.Entity.velocity.Velocity
+		local sprite = this.Entity.sprite
 	
 		running = velVec.X ~= 0.0;
 		if toJump > 0 then 
@@ -71,27 +73,27 @@ function Player.Update(dt)
 			elseif velVec.X < top then 
 				velVec.X = velVec.X + acc
 			end
-			-- m_direction = PlayerDirection.RIGHT;
+			sprite.Flipped = false
 		elseif inputLeft then
 			if velVec.X > 0 then 
 				velVec.X = velVec.X - dec 
 			elseif velVec.X > -top then 
 				velVec.X = velVec.X - acc
 			end
-			-- m_direction = PlayerDirection.LEFT;
+			sprite.Flipped = true
 		else
 			velVec.X = velVec.X - math.min(math.abs(velVec.X), frc)
 				* sign(velVec.X)
 		end
 
 		if airborne then
-            -- m_currrentAnimation = s_jumpAnim
-            -- s_jumpAnim.setFrame(Math.abs(yVel) < 1 ? 2 : (yVel > 0 ? 3 : 1))
+			sprite.Renderable = Alien_World.PlayerSprites.PlayerJump
+			Alien_World.PlayerSprites.PlayerJump:SetFrame(math.abs(velVec.Y < 1 and 2 or (velVec.Y > 0 and 3 or 1)))
             if velVec.Y < 0 and velVec.Y > -4 then
                 velVec.X = velVec.X - (math.floor(velVec.Y / 0.125) / 256)
 			end
         else
-            --m_currrentAnimation = m_running ? s_runAnim : s_idleAnim;
+			sprite.Renderable = running and Alien_World.PlayerSprites.PlayerRun or Alien_World.PlayerSprites.PlayerIdle
 		end
 
 		velVec.Y = velVec.Y + gravity;
@@ -110,6 +112,7 @@ function Player.Update(dt)
 		end
 
 		this.Entity:ReplaceVelocity(velVec)
+		this.Entity:ReplaceSprite(sprite.Renderable, sprite.Flipped)
 end
 
 function Player.Dispose()

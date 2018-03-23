@@ -233,6 +233,7 @@ namespace Alien_World.Graphics
         public void Present()
         {
             Renderer.Instance.SetDepthTesting(false);
+            Renderer.Instance.SetBlend(true);
 
             m_Shader.Bind();
             m_Shader.SetVSSystemUniformBuffer(m_R2DUniformMatricesBuffer, m_R2DUniformMatricesBufferSlot);
