@@ -9,9 +9,9 @@ namespace Alien_World.App
     public abstract class Layer : IDisposable
     {
         protected Application m_App;
-        protected Renderer2D m_Renderer2D;
-        protected GameContext m_EntityManager = new GameContext();
-        protected Systems m_EntitySystemManager = new Systems();
+        protected Renderer2D m_Renderer2D, m_CollisionBoxRenderer;
+        protected GameContext m_EntityContext = new GameContext();
+        protected Systems m_EntitySystems = new Systems();
         IGroup<GameEntity> m_RenderableEntities;
         bool m_Disposed = false;
 
@@ -20,10 +20,15 @@ namespace Alien_World.App
             if (!m_Disposed)
             {
                 if (managed)
+                {
                     m_Renderer2D.Dispose();
+                    m_CollisionBoxRenderer.Dispose();
+                    m_EntityContext.DestroyAllEntities();
+                }
                 m_Disposed = true;
             }
         }
+
         public void Dispose()
         {
             Dispose(true);
@@ -33,7 +38,8 @@ namespace Alien_World.App
         {
             m_App = program;
             m_Renderer2D = new Renderer2D();
-            m_RenderableEntities = m_EntityManager.GetGroup(GameMatcher.AllOf(GameMatcher.Position, GameMatcher.Sprite));
+            m_CollisionBoxRenderer = new Renderer2D();
+            m_RenderableEntities = m_EntityContext.GetGroup(GameMatcher.AllOf(GameMatcher.Position, GameMatcher.Sprite));
         }
 
         public void _Render()
@@ -42,36 +48,30 @@ namespace Alien_World.App
 
             OnPreRender(m_Renderer2D);
             foreach (GameEntity entity in m_RenderableEntities.GetEntities())
-                m_Renderer2D.Submit(entity.position - entity.sprite.Renderable.Size / 2, entity.sprite.Renderable);
+                entity.sprite.Renderable.Render(entity.position, m_Renderer2D);
 
             OnRender(m_Renderer2D);
             
-            m_Renderer2D.End();
             m_Renderer2D.Present();
 
-            bool collisionBoxesRendered = false;
-            foreach (GameEntity entity in m_RenderableEntities.GetEntities())
+            Renderer.Instance.SetWireframe(true);
+            m_CollisionBoxRenderer.Begin();
+            for (int i = 0; i < m_RenderableEntities.GetEntities().Length; i++)
+            {
+                GameEntity entity = m_RenderableEntities.GetEntities()[i];
                 if (entity.hasCollision)
                 {
-                    if (!collisionBoxesRendered)
-                    {
-                        m_Renderer2D.Begin();
-                        collisionBoxesRendered = true;
-                    }
-                    m_Renderer2D.FillPolygon(entity.collision.CollisionBounds.Vertices, 0xff00ffff);
+                    m_CollisionBoxRenderer.FillPolygon(entity.collision.CollisionBounds.Vertices, 0xff00ffff);
                 }
-            if (collisionBoxesRendered)
-            {
-                Renderer.Instance.SetWireframe(true);
-                m_Renderer2D.End();
-                m_Renderer2D.Present();
-                Renderer.Instance.SetWireframe(false);
             }
+
+            m_CollisionBoxRenderer.Present();
+            Renderer.Instance.SetWireframe(false);
         }
 
         public void _Update()
         {
-            m_EntitySystemManager.Execute();
+            m_EntitySystems.Execute();
             OnUpdate();
         }
 

@@ -7,14 +7,14 @@ namespace Alien_World
     {
         public Editor() : base(Application.Instance)
         {
-            m_EntitySystemManager
-                .Add(new Physics.CollisionSystem(m_EntityManager))
-                .Add(new Physics.MovementSystem(m_EntityManager))
-                .Add(new Script.ScriptSystem(m_EntityManager))
-                .Add(new AnimationSystem(m_EntityManager));
+            m_EntitySystems
+                .Add(new Physics.CollisionSystem(m_EntityContext))
+                .Add(new Physics.MovementSystem(m_EntityContext))
+                .Add(new Script.ScriptSystem(m_EntityContext))
+                .Add(new AnimationSystem(m_EntityContext));
 
-            GameEntity player = m_EntityManager.CreatePlayer(250, 250);
-            GameEntity ground = m_EntityManager.CreateTestGround(200, 500);
+            GameEntity player = m_EntityContext.CreatePlayer(250, 250);
+            GameEntity ground = m_EntityContext.CreateTestGround(200, 500);
         }
 
         protected override void Dispose(bool managed)

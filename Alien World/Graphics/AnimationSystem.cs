@@ -29,7 +29,7 @@ namespace Alien_World.Graphics
                 animatedSprite.Update();
 
                 TextureRegion region = animatedSprite.GetFrame().Region;
-                entity.sprite.Renderable.Texture = region.Texture;
+                ((AnimatedSprite)entity.sprite.Renderable).Texture = region.Texture;
 
                 Vector2[] uvs = region.UVs;
                 if (entity.sprite.Flipped)
@@ -39,7 +39,7 @@ namespace Alien_World.Graphics
                     uvsList.Reverse(2, 2);
                     uvs = uvsList.ToArray();
                 }
-                entity.sprite.Renderable.UVs = uvs;
+                ((AnimatedSprite)entity.sprite.Renderable).UVs = uvs;
             }
         }
     }

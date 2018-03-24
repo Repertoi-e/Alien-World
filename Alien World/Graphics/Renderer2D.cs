@@ -126,7 +126,6 @@ namespace Alien_World.Graphics
             {
                 if (m_Textures.Count > MaxTextures)
                 {
-                    End();
                     Present();
                     Begin();
                 }
@@ -294,13 +293,10 @@ namespace Alien_World.Graphics
             m_IndexCount += 6;
         }
 
-        public void End()
-        {
-            m_VertexBuffer.Unmap();
-        }
-
         public void Present()
         {
+            m_VertexBuffer.Unmap();
+
             Renderer.Instance.SetDepthTesting(false);
             Renderer.Instance.SetBlend(true);
 

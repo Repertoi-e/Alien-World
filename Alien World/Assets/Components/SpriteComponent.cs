@@ -7,7 +7,7 @@ using Alien_World.Resource_Manager;
 
 public struct SpriteComponent : IComponent
 {
-    public Sprite Renderable;
+    public IRenderable2D Renderable;
     public bool Flipped;
 
     public bool IsAnimated { get

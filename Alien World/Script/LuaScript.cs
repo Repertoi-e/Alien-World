@@ -4,90 +4,23 @@ using LuaInterface;
 
 namespace Alien_World.Script
 {
-    public class LuaScript : IDisposable
+    public class LuaScript
     {
         static LuaTable s_ThisTable = null;
 
         LuaTable m_Table;
         string m_TablePath;
-        bool m_Disposed = false;
-        LuaFunction m_OnInitFunc = null;
-        LuaFunction m_OnUpdateFunc = null;
-        LuaFunction m_OnDisposeFunc = null;
 
         public string ID { get; set; }
         public string Path { get; set; }
 
         public GameEntity Parent { get; set; }
 
-        public LuaFunction OnInitFunc { set { m_OnInitFunc = value; } }
-        public LuaFunction OnUpdateFunc { set { m_OnUpdateFunc = value; } }
-        public LuaFunction OnDisposeFunc { set { m_OnDisposeFunc = value; } }
+        public LuaFunction OnInitFunc { get; set; }
+        public LuaFunction OnUpdateFunc  { get; set; }
+        public LuaFunction OnDisposeFunc { get; set; }
 
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!m_Disposed)
-            {
-                if (disposing)
-                {
-                    // TODO: dispose managed state (managed objects).
-                }
-
-                SetObject();
-
-                LuaScriptManager.PushScript(this);
-
-                try
-                {
-                    m_OnDisposeFunc?.Call();
-                }
-                catch (LuaException e)
-                {
-                    Console.WriteLine(e.ToString());
-                }
-
-                s_ThisTable[m_TablePath] = null;
-
-                LuaScriptManager.PopScript();
-                if (LuaScriptManager.PeekScript() != null)
-                    LuaScriptManager.PeekScript().SetObject();
-
-                m_Disposed = true;
-            }
-        }
-
-        ~LuaScript()
-        {
-            Dispose(false);
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        public void OnInit()
-        {
-            BindParent();
-            SetObject();
-
-            LuaScriptManager.PushScript(this);
-
-            try
-            {
-                m_OnInitFunc?.Call();
-            } catch (LuaException e)
-            {
-                Console.WriteLine(e.ToString());
-            }
-
-            LuaScriptManager.PopScript();
-            if (LuaScriptManager.PeekScript() != null)
-                LuaScriptManager.PeekScript().SetObject();
-        }
-
-        public void OnUpdate(float dt)
+        public void CallFunction(LuaFunction func)
         {
             SetObject();
 
@@ -95,7 +28,7 @@ namespace Alien_World.Script
 
             try
             {
-                m_OnUpdateFunc?.Call();
+                func?.Call();
             }
             catch (LuaException e)
             {

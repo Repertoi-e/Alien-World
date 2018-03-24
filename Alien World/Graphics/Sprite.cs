@@ -2,7 +2,7 @@
 
 namespace Alien_World.Graphics
 {
-    public class Sprite
+    public class Sprite : IRenderable2D
     {
         protected Vector2 m_Size;
         protected uint m_Color = 0xff_ffffff;

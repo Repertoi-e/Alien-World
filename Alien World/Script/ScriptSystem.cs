@@ -16,7 +16,10 @@ namespace Alien_World.Script
         void IExecuteSystem.Execute()
         {
             foreach (GameEntity entity in m_ScriptEntities.GetEntities())
-                entity.script.LuaScript.OnUpdate(1.0f / 60);
+            {
+                LuaScript script = entity.script.LuaScript;
+                script.CallFunction(script.OnUpdateFunc);
+            }
         }
     }
 }

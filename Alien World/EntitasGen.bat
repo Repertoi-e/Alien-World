@@ -1,0 +1,1 @@
+..\packages\Entitas\CodeGenerator\entitas.exe gen

@@ -183,6 +183,13 @@ namespace Alien_World.App
             User32Methods.SetWindowText(m_hWnd, $"{m_Info.Title} | {Time.FPS} fps, {Time.UPS} ups");
         }
 
-        public int Run() => new GameLoop(m_Info, OnRender, OnUpdate, OnTick).Run();
+        public int Run()
+        {
+            int result = new GameLoop(m_Info, OnRender, OnUpdate, OnTick).Run();
+            Context.Instance.Dispose();
+            foreach (Layer layer in Layers)
+                layer.Dispose();
+            return result;
+        }
     }
 }

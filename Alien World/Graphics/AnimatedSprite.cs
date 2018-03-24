@@ -5,7 +5,7 @@ using SharpDX;
 
 namespace Alien_World.Graphics
 {
-    public class AnimatedSprite : Sprite
+    public class AnimatedSprite : Sprite, IRenderable2D
     {
         public struct Frame
         {
