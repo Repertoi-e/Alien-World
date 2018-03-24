@@ -11,17 +11,27 @@ namespace Alien_World.Graphics
     public class Text : IRenderable2D, IDisposable
     {
         public string String { get; set; }
-        public DirectWrite.TextLayout TextLayout { get; set; }
         public DirectWrite.TextFormat TextFormat { get; set; }
+        public DirectWrite.TextLayout TextLayout { get; set; }
+        float m_Width, m_Height;
         private bool m_Disposed = false;
 
         Brush brush = new SolidColorBrush(Context.Instance.D2DRenderTarget, new RawColor4(0, 0, 0, 1));
 
-        public Text(string text, DirectWrite.TextFormat textFormat, float width, float height)
+        public Text(string text, string fontFamily, float fontSize, float width, float height)
         {
             String = text;
-            TextLayout = new DirectWrite.TextLayout(Context.Instance.DWriteFactory, text, textFormat, width, height);
-            TextFormat = textFormat;
+            TextFormat = new DirectWrite.TextFormat(Context.Instance.DWriteFactory, fontFamily, fontSize);
+
+            m_Width = width;
+            m_Height = height;
+
+            UpdateTextLayout();
+        }
+
+        public void UpdateTextLayout()
+        {
+            TextLayout = new DirectWrite.TextLayout(Context.Instance.DWriteFactory, String, TextFormat, m_Width, m_Height);
         }
 
         public void Render(Vector2 position, Renderer2D renderer)

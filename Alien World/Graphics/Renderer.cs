@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+
 using SharpDX;
-using SharpDX.Direct3D11;
 
 namespace Alien_World.Graphics
 {
+    using D3D11 = SharpDX.Direct3D11;
+
     public enum RendererBufferType
     {
         Color = 0b01,
@@ -24,8 +26,9 @@ namespace Alien_World.Graphics
             }
         }
 
-        static List<BlendState> m_BlendStates = new List<BlendState>();
-        static List<DepthStencilState> m_DepthStencilStates = new List<DepthStencilState>();
+        static List<D3D11.BlendState> m_BlendStates = new List<D3D11.BlendState>();
+        static List<D3D11.DepthStencilState> m_DepthStencilStates = new List<D3D11.DepthStencilState>();
+        static List<D3D11.RasterizerState> m_RasterizerStates = new List<D3D11.RasterizerState>();
 
         Context m_Context = null;
 
@@ -40,9 +43,11 @@ namespace Alien_World.Graphics
 
             CreateBlendStates();
             CreateDepthStencilStates();
+            CreateRasterizerStates();
 
             SetBlend(false);
             SetDepthTesting(true);
+            SetWireframe(false);
 
             SharpDX.DXGI.Device dxgiDev = m_Context.Dev.QueryInterface<SharpDX.DXGI.Device>();
             SharpDX.DXGI.AdapterDescription adapterDesc = dxgiDev.Adapter.Description;
@@ -61,7 +66,8 @@ namespace Alien_World.Graphics
             if ((buffer & RendererBufferType.Color) != 0)
                 Context.Instance.DevCon.ClearRenderTargetView(Context.Instance.BackBuffer, Color.CornflowerBlue);
             if ((buffer & RendererBufferType.Depth) != 0)
-                Context.Instance.DevCon.ClearDepthStencilView(Context.Instance.DepthStencilView, DepthStencilClearFlags.Depth | DepthStencilClearFlags.Stencil, 1.0f, 0);
+                Context.Instance.DevCon.ClearDepthStencilView(Context.Instance.DepthStencilView,
+                    D3D11.DepthStencilClearFlags.Depth | D3D11.DepthStencilClearFlags.Stencil, 1.0f, 0);
         }
 
         public void Present()
@@ -72,92 +78,107 @@ namespace Alien_World.Graphics
         void CreateBlendStates()
         {
             {
-                var desc = new BlendStateDescription();
+                var desc = new D3D11.BlendStateDescription();
 
                 desc.RenderTarget[0].IsBlendEnabled = false;
-                desc.RenderTarget[0].RenderTargetWriteMask = ColorWriteMaskFlags.All;
+                desc.RenderTarget[0].RenderTargetWriteMask = D3D11.ColorWriteMaskFlags.All;
 
-                m_BlendStates.Add(new BlendState(m_Context.Dev, desc));
+                m_BlendStates.Add(new D3D11.BlendState(m_Context.Dev, desc));
             }
             {
-                var desc = new BlendStateDescription
+                var desc = new D3D11.BlendStateDescription
                 {
                     AlphaToCoverageEnable = false,
                     IndependentBlendEnable = false
                 };
 
                 desc.RenderTarget[0].IsBlendEnabled = true;
-                desc.RenderTarget[0].SourceBlend = BlendOption.SourceAlpha;
-                desc.RenderTarget[0].DestinationBlend = BlendOption.InverseSourceAlpha;
-                desc.RenderTarget[0].BlendOperation = BlendOperation.Add;
-                desc.RenderTarget[0].SourceAlphaBlend = BlendOption.SourceAlpha;
-                desc.RenderTarget[0].DestinationAlphaBlend = BlendOption.InverseSourceAlpha;
-                desc.RenderTarget[0].AlphaBlendOperation = BlendOperation.Add;
-                desc.RenderTarget[0].RenderTargetWriteMask = ColorWriteMaskFlags.All;
+                desc.RenderTarget[0].SourceBlend = D3D11.BlendOption.SourceAlpha;
+                desc.RenderTarget[0].DestinationBlend = D3D11.BlendOption.InverseSourceAlpha;
+                desc.RenderTarget[0].BlendOperation = D3D11.BlendOperation.Add;
+                desc.RenderTarget[0].SourceAlphaBlend = D3D11.BlendOption.SourceAlpha;
+                desc.RenderTarget[0].DestinationAlphaBlend = D3D11.BlendOption.InverseSourceAlpha;
+                desc.RenderTarget[0].AlphaBlendOperation = D3D11.BlendOperation.Add;
+                desc.RenderTarget[0].RenderTargetWriteMask = D3D11.ColorWriteMaskFlags.All;
 
-                m_BlendStates.Add(new BlendState(m_Context.Dev, desc));
+                m_BlendStates.Add(new D3D11.BlendState(m_Context.Dev, desc));
             }
         }
 
         void CreateDepthStencilStates()
         {
             {
-                var desc = new DepthStencilStateDescription
+                var desc = new D3D11.DepthStencilStateDescription
                 {
                     IsDepthEnabled = true,
-                    DepthComparison = Comparison.Less,
-                    DepthWriteMask = DepthWriteMask.All,
+                    DepthComparison = D3D11.Comparison.Less,
+                    DepthWriteMask = D3D11.DepthWriteMask.All,
                     IsStencilEnabled = false,
                     StencilReadMask = 0xff,
                     StencilWriteMask = 0xff,
-                    FrontFace = new DepthStencilOperationDescription
+                    FrontFace = new D3D11.DepthStencilOperationDescription
                     {
-                        Comparison = Comparison.Always,
-                        PassOperation = StencilOperation.Keep,
-                        FailOperation = StencilOperation.Keep,
-                        DepthFailOperation = StencilOperation.Increment
+                        Comparison = D3D11.Comparison.Always,
+                        PassOperation = D3D11.StencilOperation.Keep,
+                        FailOperation = D3D11.StencilOperation.Keep,
+                        DepthFailOperation = D3D11.StencilOperation.Increment
                     },
-                    BackFace = new DepthStencilOperationDescription
+                    BackFace = new D3D11.DepthStencilOperationDescription
                     {
-                        Comparison = Comparison.Always,
-                        PassOperation = StencilOperation.Keep,
-                        FailOperation = StencilOperation.Keep,
-                        DepthFailOperation = StencilOperation.Decrement
+                        Comparison = D3D11.Comparison.Always,
+                        PassOperation = D3D11.StencilOperation.Keep,
+                        FailOperation = D3D11.StencilOperation.Keep,
+                        DepthFailOperation = D3D11.StencilOperation.Decrement
                     }
                 };
-                m_DepthStencilStates.Add(new DepthStencilState(m_Context.Dev, desc));
+                m_DepthStencilStates.Add(new D3D11.DepthStencilState(m_Context.Dev, desc));
             }
             {
-                var desc = new DepthStencilStateDescription
+                var desc = new D3D11.DepthStencilStateDescription
                 {
                     IsDepthEnabled = false,
-                    DepthWriteMask = DepthWriteMask.Zero,
-                    DepthComparison = Comparison.Always,
+                    DepthWriteMask = D3D11.DepthWriteMask.Zero,
+                    DepthComparison = D3D11.Comparison.Always,
                     IsStencilEnabled = true,
                     StencilReadMask = 0xff,
                     StencilWriteMask = 0xff,
-                    FrontFace = new DepthStencilOperationDescription
+                    FrontFace = new D3D11.DepthStencilOperationDescription
                     {
-                        Comparison = Comparison.Always,
-                        FailOperation = StencilOperation.Keep,
-                        DepthFailOperation = StencilOperation.Keep,
-                        PassOperation = StencilOperation.Increment
+                        Comparison = D3D11.Comparison.Always,
+                        FailOperation = D3D11.StencilOperation.Keep,
+                        DepthFailOperation = D3D11.StencilOperation.Keep,
+                        PassOperation = D3D11.StencilOperation.Increment
                     },
-                    BackFace = new DepthStencilOperationDescription
+                    BackFace = new D3D11.DepthStencilOperationDescription
                     {
-                        Comparison = Comparison.Never,
-                        FailOperation = StencilOperation.Keep,
-                        DepthFailOperation = StencilOperation.Keep,
-                        PassOperation = StencilOperation.Keep
+                        Comparison = D3D11.Comparison.Never,
+                        FailOperation = D3D11.StencilOperation.Keep,
+                        DepthFailOperation = D3D11.StencilOperation.Keep,
+                        PassOperation = D3D11.StencilOperation.Keep
                     }
                 };
-                m_DepthStencilStates.Add(new DepthStencilState(m_Context.Dev, desc));
+                m_DepthStencilStates.Add(new D3D11.DepthStencilState(m_Context.Dev, desc));
+            }
+        }
+
+        void CreateRasterizerStates()
+        {
+            {
+                var desc = D3D11.RasterizerStateDescription.Default();
+                desc.IsFrontCounterClockwise = false;
+                m_RasterizerStates.Add(new D3D11.RasterizerState(m_Context.Dev, desc));
+            }
+            {
+                var desc = D3D11.RasterizerStateDescription.Default();
+                desc.IsFrontCounterClockwise = false;
+                desc.FillMode = D3D11.FillMode.Wireframe;
+                m_RasterizerStates.Add(new D3D11.RasterizerState(m_Context.Dev, desc));
             }
         }
 
         public void SetWireframe(bool enabled)
         {
-            m_Context.SetWireframe(enabled);
+            m_Context.DevCon.Rasterizer.State = m_RasterizerStates[enabled ? 1 : 0];
         }
 
         public void SetDepthTesting(bool enabled)

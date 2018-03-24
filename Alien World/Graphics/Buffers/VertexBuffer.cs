@@ -1,21 +1,22 @@
 ﻿using System;
 
 using SharpDX;
-using SharpDX.Direct3D11;
 
 namespace Alien_World.Graphics.Buffers
 {
+    using D3D11 = SharpDX.Direct3D11;
+
     public enum BufferUsage : uint
     {
-        STATIC = ResourceUsage.Dynamic,
-        DYNAMIC = ResourceUsage.Dynamic
+        STATIC = D3D11.ResourceUsage.Dynamic,
+        DYNAMIC = D3D11.ResourceUsage.Dynamic
     }
 
     public class VertexBuffer : IDisposable
     {
-        BufferDescription m_Desc;
-        SharpDX.Direct3D11.Buffer m_Handle;
-        InputLayout m_InputLayout;
+        D3D11.BufferDescription m_Desc;
+        D3D11.Buffer m_Handle;
+        D3D11.InputLayout m_InputLayout;
         int m_Size, m_Stride;
         BufferUsage m_Usage;
 
@@ -25,11 +26,11 @@ namespace Alien_World.Graphics.Buffers
         {
             m_Usage = usage;
 
-            m_Desc = new BufferDescription
+            m_Desc = new D3D11.BufferDescription
             {
-                Usage = (ResourceUsage)m_Usage,
-                BindFlags = BindFlags.VertexBuffer,
-                CpuAccessFlags = CpuAccessFlags.Write
+                Usage = (D3D11.ResourceUsage)m_Usage,
+                BindFlags = D3D11.BindFlags.VertexBuffer,
+                CpuAccessFlags = D3D11.CpuAccessFlags.Write
             };
         }
 
@@ -54,9 +55,9 @@ namespace Alien_World.Graphics.Buffers
             GC.SuppressFinalize(this);
         }
 
-        public DataBox Map(MapMode mapMode = MapMode.WriteDiscard)
+        public DataBox Map(D3D11.MapMode mapMode = D3D11.MapMode.WriteDiscard)
         {
-            return Context.Instance.DevCon.MapSubresource(m_Handle, 0, mapMode, MapFlags.None);
+            return Context.Instance.DevCon.MapSubresource(m_Handle, 0, mapMode, D3D11.MapFlags.None);
         }
 
         public void Unmap()
@@ -89,13 +90,14 @@ namespace Alien_World.Graphics.Buffers
             m_Stride = layout.Size;
 
             var elements = layout.Elements;
-            InputElement[] elementsDesc = new InputElement[layout.Elements.Count];
+            D3D11.InputElement[] elementsDesc = new D3D11.InputElement[layout.Elements.Count];
             for (int i = 0; i < elements.Count; i++)
             {
                 BufferLayout.Element element = elements[i];
-                elementsDesc[i] = new InputElement(element.Name, 0, element.Type, element.Offset, 0, InputClassification.PerVertexData, 0);
+                elementsDesc[i] = new D3D11.InputElement(element.Name, 0, element.Type, 
+                    element.Offset, 0, D3D11.InputClassification.PerVertexData, 0);
             }
-            m_InputLayout = new InputLayout(Context.Instance.Dev, Shaders.Shader.CurrentlyBound.Data.VS.Data, elementsDesc);
+            m_InputLayout = new D3D11.InputLayout(Context.Instance.Dev, Shaders.Shader.CurrentlyBound.Data.VS.Data, elementsDesc);
         }
 
         public void Resize(int size)
@@ -109,11 +111,11 @@ namespace Alien_World.Graphics.Buffers
         public void Bind()
         {
             Context.Instance.DevCon.InputAssembler.InputLayout = m_InputLayout;
-            VertexBufferBinding binding = new VertexBufferBinding
+            D3D11.VertexBufferBinding binding = new D3D11.VertexBufferBinding
             {
                 Buffer = m_Handle,
-                Offset = 0,
-                Stride = m_Stride
+                Stride = m_Stride,
+                Offset = 0
             };
             Context.Instance.DevCon.InputAssembler.SetVertexBuffers(0, binding);
         }

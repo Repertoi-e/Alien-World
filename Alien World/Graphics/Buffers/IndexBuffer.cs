@@ -1,27 +1,28 @@
 ﻿using System;
 
 using SharpDX;
-using SharpDX.Direct3D;
-using SharpDX.Direct3D11;
 
 namespace Alien_World.Graphics.Buffers
 {
+    using D3D = SharpDX.Direct3D;
+    using D3D11 = SharpDX.Direct3D11;
+
     public class IndexBuffer : IDisposable
     {
-        SharpDX.Direct3D11.Buffer m_Handle;
+        D3D11.Buffer m_Handle;
         public int Count { get; }
         bool m_Disposed = false;
 
         public unsafe IndexBuffer(uint[] data)
         {
             Count = data.Length;
-            var desc = new BufferDescription
+            var desc = new D3D11.BufferDescription
             {
-                Usage = ResourceUsage.Default,
+                Usage = D3D11.ResourceUsage.Default,
                 SizeInBytes = sizeof(uint) * Count,
-                BindFlags = BindFlags.IndexBuffer,
-                CpuAccessFlags = CpuAccessFlags.None,
-                OptionFlags = ResourceOptionFlags.None
+                BindFlags = D3D11.BindFlags.IndexBuffer,
+                CpuAccessFlags = D3D11.CpuAccessFlags.None,
+                OptionFlags = D3D11.ResourceOptionFlags.None
             };
 
             DataStream dataStream = new DataStream(desc.SizeInBytes, true, true);
@@ -29,7 +30,7 @@ namespace Alien_World.Graphics.Buffers
                 dataStream.Write(i);
             dataStream.Position = 0;
 
-            m_Handle = new SharpDX.Direct3D11.Buffer(Context.Instance.Dev, dataStream, desc);
+            m_Handle = new D3D11.Buffer(Context.Instance.Dev, dataStream, desc);
         }
 
         ~IndexBuffer()
@@ -58,7 +59,7 @@ namespace Alien_World.Graphics.Buffers
 
         public void Bind()
         {
-            Context.Instance.DevCon.InputAssembler.PrimitiveTopology = PrimitiveTopology.TriangleList;
+            Context.Instance.DevCon.InputAssembler.PrimitiveTopology = D3D.PrimitiveTopology.TriangleList;
             Context.Instance.DevCon.InputAssembler.SetIndexBuffer(m_Handle, SharpDX.DXGI.Format.R32_UInt, 0);
         }
     }

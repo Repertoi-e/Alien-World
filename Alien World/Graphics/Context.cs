@@ -41,7 +41,6 @@ namespace Alien_World.Graphics
         D3D11.DepthStencilState m_DepthStencilState;
         DX.Viewport m_ScreenViewport;
         D3D11.Texture2D m_Backbuffer, m_DepthBuffer;
-        D3D11.RasterizerState[] m_RasterizerStates = new D3D11.RasterizerState[2];
 
         ApplicationInfo m_ApplicationInfo = null;
 
@@ -186,24 +185,6 @@ namespace Alien_World.Graphics
             m_ScreenViewport.MinDepth = 0.0f;
             m_ScreenViewport.MaxDepth = 1.0f;
             DevCon.Rasterizer.SetViewport(m_ScreenViewport);
-
-            {
-                var rasterizerStateDesc = D3D11.RasterizerStateDescription.Default();
-                rasterizerStateDesc.IsFrontCounterClockwise = false;
-                m_RasterizerStates[0] = new D3D11.RasterizerState(Dev, rasterizerStateDesc);
-            }
-            {
-                var rasterizerStateDesc = D3D11.RasterizerStateDescription.Default();
-                rasterizerStateDesc.IsFrontCounterClockwise = false;
-                rasterizerStateDesc.FillMode = D3D11.FillMode.Wireframe;
-                m_RasterizerStates[1] = new D3D11.RasterizerState(Dev, rasterizerStateDesc);
-            }
-            SetWireframe(false);
-        }
-
-        public void SetWireframe(bool enabled)
-        {
-            DevCon.Rasterizer.State = m_RasterizerStates[enabled ? 1 : 0];
         }
 
         public void SetRenderTargets(D3D11.DepthStencilView depthStencilView, D3D11.RenderTargetView renderTargetView)

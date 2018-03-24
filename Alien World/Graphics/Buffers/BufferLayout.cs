@@ -5,12 +5,14 @@ using SharpDX;
 
 namespace Alien_World.Graphics.Buffers
 {
+    using DXGI = SharpDX.DXGI;
+
     public class BufferLayout
     {
         public struct Element
         {
             public string Name;
-            public SharpDX.DXGI.Format Type;
+            public DXGI.Format Type;
             public int TypeSize, Offset, Count;
         }
 
@@ -20,24 +22,24 @@ namespace Alien_World.Graphics.Buffers
         public void Push<T>(string name, int count)
         {
             if (typeof(T) == typeof(float))
-                PushElement(name, SharpDX.DXGI.Format.R32_Float, sizeof(float), count);
+                PushElement(name, DXGI.Format.R32_Float, sizeof(float), count);
             else if (typeof(T) == typeof(int))
-                PushElement(name, SharpDX.DXGI.Format.R32_SInt, sizeof(int), count);
+                PushElement(name, DXGI.Format.R32_SInt, sizeof(int), count);
             else if (typeof(T) == typeof(uint))
-                PushElement(name, SharpDX.DXGI.Format.R32_UInt, sizeof(uint), count);
+                PushElement(name, DXGI.Format.R32_UInt, sizeof(uint), count);
             else if (typeof(T) == typeof(byte))
-                PushElement(name, SharpDX.DXGI.Format.R8G8B8A8_UNorm, sizeof(byte), count);
+                PushElement(name, DXGI.Format.R8G8B8A8_UNorm, sizeof(byte), count);
             else if (typeof(T) == typeof(Vector2))
-                PushElement(name, SharpDX.DXGI.Format.R32G32_Float, sizeof(float) * 2, count);
+                PushElement(name, DXGI.Format.R32G32_Float, sizeof(float) * 2, count);
             else if (typeof(T) == typeof(Vector3))
-                PushElement(name, SharpDX.DXGI.Format.R32G32B32_Float, sizeof(float) * 3, count);
+                PushElement(name, DXGI.Format.R32G32B32_Float, sizeof(float) * 3, count);
             else if (typeof(T) == typeof(Vector4))
-                PushElement(name, SharpDX.DXGI.Format.R32G32B32A32_Float, sizeof(float) * 4, count);
+                PushElement(name, DXGI.Format.R32G32B32A32_Float, sizeof(float) * 4, count);
             else
                 throw new NotImplementedException("Type not implemented.");
         }
 
-        private void PushElement(string name, SharpDX.DXGI.Format type, int typeSize, int count)
+        private void PushElement(string name, DXGI.Format type, int typeSize, int count)
         {
             m_Elements.Add(new Element
             {

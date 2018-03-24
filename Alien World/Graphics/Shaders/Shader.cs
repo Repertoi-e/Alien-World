@@ -1,21 +1,19 @@
 ﻿using System;
 using System.IO;
-using System.Text;
+using System.Diagnostics;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
-using System.Runtime.InteropServices;
+using System.Text.RegularExpressions;
 
 using SharpDX;
-using SharpDX.Direct3D;
-using SharpDX.Direct3D11;
-using SharpDX.D3DCompiler;
+
 using Alien_World.Resource_Manager;
 using Alien_World.File_System;
-using System.Diagnostics;
-using System.Text.RegularExpressions;
 
 namespace Alien_World.Graphics.Shaders
 {
+    using D3D11 = SharpDX.Direct3D11;
+    using D3DCompiler = SharpDX.D3DCompiler;
+
     public enum ShaderType
     {
         NONE = -1,
@@ -29,9 +27,9 @@ namespace Alien_World.Graphics.Shaders
     {
         public class ShaderData
         {
-            public VertexShader VertexShader;
-            public PixelShader PixelShader;
-            public ShaderBytecode VS, PS;
+            public D3D11.VertexShader VertexShader;
+            public D3D11.PixelShader PixelShader;
+            public D3DCompiler.ShaderBytecode VS, PS;
         };
 
         public static Shader CurrentlyBound { get; set; } = null;
@@ -49,8 +47,8 @@ namespace Alien_World.Graphics.Shaders
         public ShaderUniformBufferDeclaration PSUserUniformBuffer { get { return m_PSUserUniformBuffer; } }
         public List<ShaderResourceDeclaration> Resources { get { return m_Resources; } }
 
-        SharpDX.Direct3D11.Buffer[] m_VSConstantBuffers;
-        SharpDX.Direct3D11.Buffer[] m_PSConstantBuffers;
+        D3D11.Buffer[] m_VSConstantBuffers;
+        D3D11.Buffer[] m_PSConstantBuffers;
 
         public Shader(string name, string dir, string originalSource)
         {
@@ -75,17 +73,17 @@ namespace Alien_World.Graphics.Shaders
         {
             Data.VS = GetBytecode(FilePath + Name + "VS.cso");
             Data.PS = GetBytecode(FilePath + Name + "PS.cso");
-            Data.VertexShader = new VertexShader(Context.Instance.Dev, Data.VS);
-            Data.PixelShader = new PixelShader(Context.Instance.Dev, Data.PS);
+            Data.VertexShader = new D3D11.VertexShader(Context.Instance.Dev, Data.VS);
+            Data.PixelShader = new D3D11.PixelShader(Context.Instance.Dev, Data.PS);
 
             Parse(RemoveComments(originalSource));
             CreateBuffers();
         }
 
-        ShaderBytecode GetBytecode(string path)
+        D3DCompiler.ShaderBytecode GetBytecode(string path)
         {
             using (Stream stream = ResourceLoader.FileSystem.OpenFile(FileSystemPath.Parse(path), FileAccess.Read))
-                return ShaderBytecode.FromStream(stream);
+                return D3DCompiler.ShaderBytecode.FromStream(stream);
         }
 
         unsafe string RemoveComments(string source)
@@ -252,60 +250,60 @@ namespace Alien_World.Graphics.Shaders
         // Note: We only support a single user uniform buffer per shader
         void CreateBuffers()
         {
-            m_VSConstantBuffers = new SharpDX.Direct3D11.Buffer[m_VSUniformBuffers.Count + (m_VSUserUniformBuffer != null ? 1 : 0)];
+            m_VSConstantBuffers = new D3D11.Buffer[m_VSUniformBuffers.Count + (m_VSUserUniformBuffer != null ? 1 : 0)];
 
             foreach(ShaderUniformBufferDeclaration decl in m_VSUniformBuffers)
             {
-                var desc = new BufferDescription
+                var desc = new D3D11.BufferDescription
                 {
                     SizeInBytes = decl.Size,
-                    Usage = ResourceUsage.Dynamic,
-                    BindFlags = BindFlags.ConstantBuffer,
-                    CpuAccessFlags = CpuAccessFlags.Write
+                    Usage = D3D11.ResourceUsage.Dynamic,
+                    BindFlags = D3D11.BindFlags.ConstantBuffer,
+                    CpuAccessFlags = D3D11.CpuAccessFlags.Write
                 };
-                m_VSConstantBuffers[decl.Register] = new SharpDX.Direct3D11.Buffer(Context.Instance.Dev, desc);
+                m_VSConstantBuffers[decl.Register] = new D3D11.Buffer(Context.Instance.Dev, desc);
             }
 
             if (m_VSUserUniformBuffer != null)
             {
                 ShaderUniformBufferDeclaration decl = m_VSUserUniformBuffer;
 
-                var desc = new BufferDescription
+                var desc = new D3D11.BufferDescription
                 {
                     SizeInBytes = decl.Size,
-                    Usage = ResourceUsage.Dynamic,
-                    BindFlags = BindFlags.ConstantBuffer,
-                    CpuAccessFlags = CpuAccessFlags.Write
+                    Usage = D3D11.ResourceUsage.Dynamic,
+                    BindFlags = D3D11.BindFlags.ConstantBuffer,
+                    CpuAccessFlags = D3D11.CpuAccessFlags.Write
                 };
-                m_VSConstantBuffers[decl.Register] = new SharpDX.Direct3D11.Buffer(Context.Instance.Dev, desc);
+                m_VSConstantBuffers[decl.Register] = new D3D11.Buffer(Context.Instance.Dev, desc);
             }
 
-            m_PSConstantBuffers = new SharpDX.Direct3D11.Buffer[m_PSUniformBuffers.Count + (m_PSUserUniformBuffer != null ? 1 : 0)];
+            m_PSConstantBuffers = new D3D11.Buffer[m_PSUniformBuffers.Count + (m_PSUserUniformBuffer != null ? 1 : 0)];
 
             foreach(ShaderUniformBufferDeclaration decl in m_PSUniformBuffers)
             {
-                var desc = new BufferDescription
+                var desc = new D3D11.BufferDescription
                 {
                     SizeInBytes = decl.Size,
-                    Usage = ResourceUsage.Dynamic,
-                    BindFlags = BindFlags.ConstantBuffer,
-                    CpuAccessFlags = CpuAccessFlags.Write
+                    Usage = D3D11.ResourceUsage.Dynamic,
+                    BindFlags = D3D11.BindFlags.ConstantBuffer,
+                    CpuAccessFlags = D3D11.CpuAccessFlags.Write
                 };
-                m_PSConstantBuffers[decl.Register] = new SharpDX.Direct3D11.Buffer(Context.Instance.Dev, desc);
+                m_PSConstantBuffers[decl.Register] = new D3D11.Buffer(Context.Instance.Dev, desc);
             }
 
             if (m_PSUserUniformBuffer != null)
             {
                 ShaderUniformBufferDeclaration decl = m_PSUserUniformBuffer;
 
-                var desc = new BufferDescription
+                var desc = new D3D11.BufferDescription
                 {
                     SizeInBytes = decl.Size,
-                    Usage = ResourceUsage.Dynamic,
-                    BindFlags = BindFlags.ConstantBuffer,
-                    CpuAccessFlags = CpuAccessFlags.Write
+                    Usage = D3D11.ResourceUsage.Dynamic,
+                    BindFlags = D3D11.BindFlags.ConstantBuffer,
+                    CpuAccessFlags = D3D11.CpuAccessFlags.Write
                 };
-                m_PSConstantBuffers[decl.Register] = new SharpDX.Direct3D11.Buffer(Context.Instance.Dev, desc);
+                m_PSConstantBuffers[decl.Register] = new D3D11.Buffer(Context.Instance.Dev, desc);
             }
         }
 
@@ -325,8 +323,8 @@ namespace Alien_World.Graphics.Shaders
             if (m_VSUserUniformBuffer != null)
                 Debug.Assert(slot != m_VSUserUniformBuffer.Register);
 
-            SharpDX.Direct3D11.Buffer cbuffer = m_VSConstantBuffers[slot];
-            DataBox dataBox = Context.Instance.DevCon.MapSubresource(cbuffer, 0, MapMode.WriteDiscard, MapFlags.None);
+            D3D11.Buffer cbuffer = m_VSConstantBuffers[slot];
+            DataBox dataBox = Context.Instance.DevCon.MapSubresource(cbuffer, 0, D3D11.MapMode.WriteDiscard, D3D11.MapFlags.None);
             Utilities.Write(dataBox.DataPointer, ref data);
             Context.Instance.DevCon.UnmapSubresource(cbuffer, 0);
         }
@@ -336,24 +334,24 @@ namespace Alien_World.Graphics.Shaders
             if (m_PSUserUniformBuffer != null)
                 Debug.Assert(slot != m_PSUserUniformBuffer.Register);
 
-            SharpDX.Direct3D11.Buffer cbuffer = m_PSConstantBuffers[slot];
-            DataBox dataBox = Context.Instance.DevCon.MapSubresource(cbuffer, 0, MapMode.WriteDiscard, MapFlags.None);
+            D3D11.Buffer cbuffer = m_PSConstantBuffers[slot];
+            DataBox dataBox = Context.Instance.DevCon.MapSubresource(cbuffer, 0, D3D11.MapMode.WriteDiscard, D3D11.MapFlags.None);
             Utilities.Write(dataBox.DataPointer, ref data);
             Context.Instance.DevCon.UnmapSubresource(cbuffer, 0);
         }
 
         public void SetVSUserUniformBuffer<T>(T data) where T : struct 
         {
-            SharpDX.Direct3D11.Buffer cbuffer = m_VSConstantBuffers[m_VSUserUniformBuffer.Register];
-            DataBox dataBox = Context.Instance.DevCon.MapSubresource(cbuffer, 0, MapMode.WriteDiscard, MapFlags.None);
+            D3D11.Buffer cbuffer = m_VSConstantBuffers[m_VSUserUniformBuffer.Register];
+            DataBox dataBox = Context.Instance.DevCon.MapSubresource(cbuffer, 0, D3D11.MapMode.WriteDiscard, D3D11.MapFlags.None);
             Utilities.Write(dataBox.DataPointer, ref data);
             Context.Instance.DevCon.UnmapSubresource(cbuffer, 0);
         }
 
         public void SetPSUserUniformBuffer<T>(T data) where T : struct
         {
-            SharpDX.Direct3D11.Buffer cbuffer = m_PSConstantBuffers[m_PSUserUniformBuffer.Register];
-            DataBox dataBox = Context.Instance.DevCon.MapSubresource(cbuffer, 0, MapMode.WriteDiscard, MapFlags.None);
+            D3D11.Buffer cbuffer = m_PSConstantBuffers[m_PSUserUniformBuffer.Register];
+            DataBox dataBox = Context.Instance.DevCon.MapSubresource(cbuffer, 0, D3D11.MapMode.WriteDiscard, D3D11.MapFlags.None);
             Utilities.Write(dataBox.DataPointer, ref data);
             Context.Instance.DevCon.UnmapSubresource(cbuffer, 0);
         }
