@@ -34,7 +34,7 @@ namespace Alien_World.Graphics
             TextLayout = new DirectWrite.TextLayout(Context.Instance.DWriteFactory, String, TextFormat, m_Width, m_Height);
         }
 
-        public void Render(Vector2 position, Renderer2D renderer)
+        public void Render(Vector2 position, IRenderer2D renderer)
         {
             Context context = Context.Instance;
             context.D2DRenderTarget.BeginDraw();

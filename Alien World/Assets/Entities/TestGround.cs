@@ -12,7 +12,6 @@ static class TestGround
     {
         GameEntity entity = context.CreateEntity();
         entity.AddPosition(x, y);
-        //entity.AddSprite(SpriteComponent.GetRenderableFromDefinition("Static", "/Assets/Art/Title-Screen/button-start.png", 900, 20), false);
         Text text = new Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit. " +
             "Maecenas ac enim ac ipsum tincidunt ultricies. Ut sed tortor ac felis consequat " +
             "tincidunt accumsan in sem. Vestibulum laoreet ante diam, id malesuada ipsum " +
@@ -22,18 +21,18 @@ static class TestGround
             "ex, ac ultrices tortor elit accumsan libero.", "Segoe UI", 13, 300, 300);
         text.TextFormat.TextAlignment = TextAlignment.Justified;
         text.UpdateTextLayout();
-
-        entity.AddSprite(text, false);
-        entity.AddVelocity(Vector2.Zero);
-        entity.AddCollision(new Polygon(entity.position, 450, 10), null);
-        entity.isStaticBody = true;
-
+        entity.AddRenderable(new RenderableInfo { Reference = text });
         entity.OnComponentRemoved += (IEntity e, int index, IComponent component) =>
         {
-            if (component is SpriteComponent comp)
-                ((Text)comp.Renderable).Dispose();
+            if (component is RenderableComponent comp)
+                ((Text)comp.Info.Reference).Dispose();
         };
 
+        entity.AddVelocity(Vector2.Zero);
+
+        entity.AddCollision(new Polygon(entity.position, 450, 10), null);
+        entity.isStaticBody = true;
+        
         return entity;
     }
 }

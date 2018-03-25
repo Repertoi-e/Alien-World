@@ -14,31 +14,37 @@ namespace Alien_World.Graphics
         public AnimationSystem(GameContext context)
         {
             m_Context = context;
-            m_AnimatableEntities = context.GetGroup(GameMatcher.AllOf(GameMatcher.Sprite));
+            m_AnimatableEntities = context.GetGroup(GameMatcher.AllOf(GameMatcher.Renderable));
         }
 
         void IExecuteSystem.Execute()
         {
             foreach (GameEntity entity in m_AnimatableEntities.GetEntities())
             {
-                AnimatedSprite animatedSprite = entity.sprite.GetAsAnimated;
-                if (animatedSprite == null)
-                    continue;
-
-                animatedSprite.Update();
-
-                TextureRegion region = animatedSprite.GetFrame().Region;
-                ((AnimatedSprite)entity.sprite.Renderable).Texture = region.Texture;
-
-                Vector2[] uvs = region.UVs;
-                if (entity.sprite.Flipped)
+                RenderableInfo info = entity.renderable.Info;
+                if (info.Type == RenderableType.AnimatedSprite)
                 {
-                    List<Vector2> uvsList = new List<Vector2>(uvs);
-                    uvsList.Reverse(0, 2);
-                    uvsList.Reverse(2, 2);
-                    uvs = uvsList.ToArray();
+                    AnimatedSprite animatedSprite = (AnimatedSprite)info.Reference;
+
+                    animatedSprite.Update();
+
+                    TextureRegion region = animatedSprite.GetFrame().Region;
+                    animatedSprite.Texture = region.Texture;
+                    animatedSprite.UVs = region.UVs;
                 }
-                ((AnimatedSprite)entity.sprite.Renderable).UVs = uvs;
+
+                if (info.Type != RenderableType.Text)
+                {
+                    Sprite sprite = (Sprite)info.Reference;
+
+                    if (info.Flipped)
+                    {
+                        List<Vector2> uvsList = new List<Vector2>(sprite.UVs);
+                        uvsList.Reverse(0, 2);
+                        uvsList.Reverse(2, 2);
+                        sprite.UVs = uvsList.ToArray();
+                    }
+                }
             }
         }
     }

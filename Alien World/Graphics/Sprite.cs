@@ -24,7 +24,7 @@ namespace Alien_World.Graphics
             m_Color = color;
         }
 
-        public virtual void Render(Vector2 position, Renderer2D renderer)
+        public void Render(Vector2 position, IRenderer2D renderer)
         {
             renderer.Submit(position, this);
         }

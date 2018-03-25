@@ -30,9 +30,9 @@ namespace Alien_World.Graphics
         public uint Color;
     }
 
-    public unsafe class Renderer2D : IDisposable
+    public unsafe class BatchRenderer2D : IRenderer2D, IDisposable
     {
-        static readonly int MaxSprites = 10000;
+        static readonly int MaxSprites = 5000;
         static readonly int IndicesSize = MaxSprites * 6;
         static readonly int MaxTextures = 31;
 
@@ -57,7 +57,7 @@ namespace Alien_World.Graphics
         int m_IndexCount = 0;
         List<Texture> m_Textures = new List<Texture>(MaxTextures + 1);
 
-        public Renderer2D()
+        public BatchRenderer2D()
         {
             m_Shader = ResourceLoader.LoadShader("Renderer2D", "/Assets/Shaders/");
             m_Shader.Bind();
@@ -297,8 +297,8 @@ namespace Alien_World.Graphics
         {
             m_VertexBuffer.Unmap();
 
-            Renderer.Instance.SetDepthTesting(false);
-            Renderer.Instance.SetBlend(true);
+            Context.Instance.SetDepthTesting(false);
+            Context.Instance.SetBlend(true);
 
             m_Shader.Bind();
             m_Shader.SetVSSystemUniformBuffer(m_R2DUniformMatricesBuffer, m_R2DUniformMatricesBufferSlot);

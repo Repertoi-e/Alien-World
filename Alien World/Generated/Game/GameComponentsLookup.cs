@@ -10,8 +10,8 @@ public static class GameComponentsLookup {
 
     public const int Collision = 0;
     public const int Position = 1;
-    public const int Script = 2;
-    public const int Sprite = 3;
+    public const int Renderable = 2;
+    public const int Script = 3;
     public const int StaticBody = 4;
     public const int Velocity = 5;
 
@@ -20,8 +20,8 @@ public static class GameComponentsLookup {
     public static readonly string[] componentNames = {
         "Collision",
         "Position",
+        "Renderable",
         "Script",
-        "Sprite",
         "StaticBody",
         "Velocity"
     };
@@ -29,8 +29,8 @@ public static class GameComponentsLookup {
     public static readonly System.Type[] componentTypes = {
         typeof(CollisionComponent),
         typeof(PositionComponent),
+        typeof(RenderableComponent),
         typeof(ScriptComponent),
-        typeof(SpriteComponent),
         typeof(StaticBodyComponent),
         typeof(VelocityComponent)
     };

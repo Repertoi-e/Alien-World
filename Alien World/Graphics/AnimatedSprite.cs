@@ -71,11 +71,6 @@ namespace Alien_World.Graphics
             return this;
         }
 
-        public override void Render(Vector2 position, Renderer2D renderer)
-        {
-            renderer.Submit(position, this);
-        }
-
         public Frame GetFrame()
         {
             return m_Frames[m_CurrentFrame];

@@ -206,18 +206,21 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Generated\Game\Components\GameRenderableComponent.cs" />
     <Compile Include="Generated\Game\Components\GameVelocityComponent.cs" />
     <Compile Include="Generated\Game\Components\GameStaticBodyComponent.cs" />
     <Compile Include="Generated\Game\Components\GameCollisionComponent.cs" />
     <Compile Include="Generated\Game\Components\GamePositionComponent.cs" />
     <Compile Include="Generated\Game\Components\GameScriptComponent.cs" />
-    <Compile Include="Generated\Game\Components\GameSpriteComponent.cs" />
     <Compile Include="Generated\Game\GameComponentsLookup.cs" />
     <Compile Include="Generated\Game\GameAttribute.cs" />
     <Compile Include="Generated\Game\GameContext.cs" />
     <Compile Include="Generated\Game\GameMatcher.cs" />
     <Compile Include="Generated\Contexts.cs" />
     <Compile Include="Generated\Game\GameEntity.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Assets\Components\RenderableComponent.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Sprites\PlayerSprites.cs" />
@@ -241,7 +244,6 @@
   <ItemGroup>
     <Compile Include="Assets\Components\PositionComponent.cs" />
     <Compile Include="Assets\Components\ScriptComponent.cs" />
-    <Compile Include="Assets\Components\SpriteComponent.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App\Application.cs" />
@@ -263,10 +265,11 @@
     <Compile Include="Graphics\Buffers\VertexBuffer.cs" />
     <Compile Include="Graphics\Context.cs" />
     <Compile Include="Graphics\AnimationSystem.cs" />
-    <Compile Include="Graphics\Renderable2D.cs" />
+    <Compile Include="Graphics\IRenderable2D.cs" />
+    <Compile Include="Graphics\IRenderer2D.cs" />
+    <Compile Include="Graphics\RenderableInfo.cs" />
     <Compile Include="Graphics\Sprite.cs" />
-    <Compile Include="Graphics\Renderer.cs" />
-    <Compile Include="Graphics\Renderer2D.cs" />
+    <Compile Include="Graphics\BatchRenderer2D.cs" />
     <Compile Include="Graphics\Shaders\Shader.cs" />
     <Compile Include="Graphics\Shaders\ShaderResourceDeclaration.cs" />
     <Compile Include="Graphics\Shaders\ShaderResourceType.cs" />

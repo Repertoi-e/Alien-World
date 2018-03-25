@@ -91,7 +91,6 @@ namespace Alien_World.App
             User32Methods.UpdateWindow(m_hWnd);
 
             Context.Instance.Init(m_hWnd, m_Info);
-            Renderer.Instance.Init();
             Script.LuaEngine.Instance.Init();
         }
 
@@ -164,12 +163,12 @@ namespace Alien_World.App
 
         public void OnRender()
         {
-            Renderer.Instance.Clear(RendererBufferType.Color | RendererBufferType.Depth);
+            Context.Instance.Clear(RendererBufferType.Color | RendererBufferType.Depth);
 
             foreach (Layer layer in Layers)
                 layer._Render();
 
-            Renderer.Instance.Present();
+            Context.Instance.Present();
         }
 
         public void OnUpdate()

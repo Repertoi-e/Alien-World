@@ -52,7 +52,7 @@ end
 
 function Player.Update(dt)
 		local velVec = this.Entity.velocity.Velocity
-		local sprite = this.Entity.sprite
+		local renderableInfo = this.Entity.renderable.Info
 	
 		running = velVec.X ~= 0.0;
 		if toJump > 0 then 
@@ -78,14 +78,14 @@ function Player.Update(dt)
 			elseif velVec.X < top then 
 				velVec.X = velVec.X + acc
 			end
-			sprite.Flipped = false
+			renderableInfo.Flipped = false
 		elseif inputLeft then
 			if velVec.X > 0 then 
 				velVec.X = velVec.X - dec 
 			elseif velVec.X > -top then 
 				velVec.X = velVec.X - acc
 			end
-			sprite.Flipped = true
+			renderableInfo.Flipped = true
 		else
 			velVec.X = velVec.X - math.min(math.abs(velVec.X), frc)
 				* sign(velVec.X)
@@ -93,13 +93,13 @@ function Player.Update(dt)
 
 		-- While in air
 		if airborne then
-			sprite.Renderable = Alien_World.PlayerSprites.PlayerJump
+			renderableInfo.Reference = Alien_World.PlayerSprites.PlayerJump
 			Alien_World.PlayerSprites.PlayerJump:SetFrame(math.abs(velVec.Y < 1 and 2 or (velVec.Y > 0 and 3 or 1)))
             if velVec.Y < 0 and velVec.Y > -4 then
                 velVec.X = velVec.X - (math.floor(velVec.Y / 0.125) / 256)
 			end
         else
-			sprite.Renderable = running and Alien_World.PlayerSprites.PlayerRun or Alien_World.PlayerSprites.PlayerIdle
+			renderableInfo.Reference = running and Alien_World.PlayerSprites.PlayerRun or Alien_World.PlayerSprites.PlayerIdle
 		end
 
 		-- Gravity
@@ -120,7 +120,7 @@ function Player.Update(dt)
 		end
 
 		this.Entity:ReplaceVelocity(velVec)
-		this.Entity:ReplaceSprite(sprite.Renderable, sprite.Flipped)
+		this.Entity:ReplaceRenderable(renderableInfo)
 end
 
 function Player.Dispose()
